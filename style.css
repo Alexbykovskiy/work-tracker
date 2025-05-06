@@ -1,1 +1,15 @@
 body { font-family: sans-serif; background: #002D37; color: white; padding: 1rem; }
+
+.entry {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  color: white;
+  line-height: 1.4;
+}
+.entry.income {
+  background-color: #2e7d32; /* зеленый */
+}
+.entry.expense {
+  background-color: #c62828; /* красный */
+}

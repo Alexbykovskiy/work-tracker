@@ -83,3 +83,47 @@ document.getElementById("expense-form").addEventListener("submit", async (e) => 
 window.addEventListener("DOMContentLoaded", () => {
   loadLocations();
 });
+
+
+async function loadJournal() {
+  const journal = [];
+
+  const [incomeSnap, expenseSnap] = await Promise.all([
+    db.collection("tattoo_income").orderBy("date", "desc").get(),
+    db.collection("tattoo_expenses").orderBy("date", "desc").get()
+  ]);
+
+  incomeSnap.forEach(doc => journal.push({ type: "income", id: doc.id, ...doc.data() }));
+  expenseSnap.forEach(doc => journal.push({ type: "expense", id: doc.id, ...doc.data() }));
+
+  journal.sort((a, b) => b.date.localeCompare(a.date));
+
+  const list = document.getElementById("journal-list");
+  list.innerHTML = "";
+
+  journal.forEach((entry, index) => {
+    const li = document.createElement("li");
+    li.className = entry.type === "income" ? "entry income" : "entry expense";
+
+    const meta = entry.type === "income"
+      ? `${entry.type} | ${entry.date} | ${entry.timeFrom}–${entry.timeTo} | ${entry.type || ""}`
+      : `${entry.type} | ${entry.date} | ${entry.category}`;
+
+    const desc = entry.comment ? `Комментарий: ${entry.comment}` : "";
+    const loc = entry.location ? `Локация: ${entry.location}` : "";
+    const tags = entry.tags ? `#${entry.tags}` : "";
+
+    li.innerHTML = `
+      <div><strong>€${Number(entry.amount).toFixed(2)}</strong></div>
+      <div>${meta}</div>
+      <div>${loc} ${tags}</div>
+      <div>${desc}</div>
+    `;
+    list.appendChild(li);
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadLocations();
+  loadJournal();
+});

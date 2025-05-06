@@ -16,71 +16,64 @@
     <canvas id="expenseChart"></canvas>
   </div>
 
+  
   <fieldset class="block">
-    <legend>Фильтры</legend>
-    <div class="filters">
-      <div class="row">
-        <label class="small-label">Период:</label>
-        <input type="date" id="filter-from" />
-        <input type="date" id="filter-to" />
-      </div>
-      <div class="row">
-        <input type="text" id="filter-tag" placeholder="#тег" />
-        <select id="filter-category">
-          <option value="Все">Все категории</option>
-          <option>Питание</option>
-          <option>Проезд</option>
-          <option>Жильё</option>
-          <option>Картриджи</option>
-          <option>Краски</option>
-          <option>Химия</option>
-          <option>Оборудование</option>
-        </select>
-      </div>
-      <div class="row">
-        <input type="number" id="filter-row-start" placeholder="Строка от" />
-        <input type="number" id="filter-row-end" placeholder="до строки" />
-      </div>
-      <div class="form-buttons">
-        <button onclick="location.reload()">Сброс</button>
-        <button onclick="applyFilters()">Применить</button>
-      </div>
-    </div>
-  </fieldset>
-
-  <fieldset class="block">
-    <legend>Журнал</legend>
-    <ul id="expense-list"></ul>
-  </fieldset>
-
-  <fieldset class="block">
-    <legend>Добавить запись</legend>
-    <form id="expense-form" class="expense-form">
-      <div class="row">
-        <select id="category">
-          <option>Питание</option>
-          <option>Проезд</option>
-          <option>Жильё</option>
-          <option>Картриджи</option>
-          <option>Краски</option>
-          <option>Химия</option>
-          <option>Оборудование</option>
-        </select>
-        <input type="text" id="amount" placeholder="Сумма €" required />
-      </div>
-      <div class="row">
-        <input type="text" id="note" placeholder="Комментарий" />
-        <input type="text" id="tag" placeholder="#тег" />
-      </div>
+    <legend>Добавить доход</legend>
+    <form id="income-form" class="expense-form">
       <div class="row">
         <label class="small-label">Дата:</label>
-        <input type="date" id="date" required />
+        <input type="date" id="income-date" required />
+      </div>
+      <div class="row">
+        <input type="time" id="time-from" required />
+        <input type="time" id="time-to" required />
+      </div>
+      <div class="row">
+        <select id="income-type">
+          <option>новая</option>
+          <option>cover-up</option>
+          <option>коррекция</option>
+        </select>
+        <input type="text" id="income-amount" placeholder="Стоимость €" required />
+      </div>
+      <div class="row">
+        <input type="text" id="income-tags" placeholder="#тег" />
+        <input type="text" id="income-comment" placeholder="Комментарий" />
       </div>
       <div class="form-buttons">
-        <button type="button" onclick="form.reset(); document.getElementById('edit-id').value = '';">Отмена</button>
+        <button type="button" onclick="document.getElementById('income-form').reset()">Отмена</button>
         <button type="submit">Сохранить</button>
       </div>
-      <input type="hidden" id="edit-id" />
+    </form>
+  </fieldset>
+
+  <fieldset class="block">
+    <legend>Добавить расход</legend>
+    <form id="expense-form" class="expense-form">
+      <div class="row">
+        <label class="small-label">Дата:</label>
+        <input type="date" id="expense-date" required />
+      </div>
+      <div class="row">
+        <select id="expense-category">
+          <option>Питание</option>
+          <option>Проезд</option>
+          <option>Жильё</option>
+          <option>Картриджи</option>
+          <option>Краски</option>
+          <option>Химия</option>
+          <option>Оборудование</option>
+        </select>
+        <input type="text" id="expense-amount" placeholder="Сумма €" required />
+      </div>
+      <div class="row">
+        <input type="text" id="expense-tags" placeholder="#тег" />
+        <input type="text" id="expense-comment" placeholder="Комментарий" />
+      </div>
+      <div class="form-buttons">
+        <button type="button" onclick="document.getElementById('expense-form').reset()">Отмена</button>
+        <button type="submit">Сохранить</button>
+      </div>
     </form>
   </fieldset>
 

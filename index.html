@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Учёт татуировок</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Учёт татуировок</h1>
+    <div id="tabs">
+      <button onclick="showTab('income')">Доходы</button>
+      <button onclick="showTab('expenses')">Расходы</button>
+      <button onclick="showTab('analytics')">Анализ</button>
+    </div>
+    <div id="content">
+      <div id="income" class="tab"></div>
+      <div id="expenses" class="tab" style="display:none"></div>
+      <div id="analytics" class="tab" style="display:none"></div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

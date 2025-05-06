@@ -1,29 +1,90 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Учёт татуировок</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tattoo Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h1>Учёт татуировок</h1>
-    <div id="tabs">
-      <button onclick="showTab('income')">Доходы</button>
-      <button onclick="showTab('expenses')">Расходы</button>
-      <button onclick="showTab('analytics')">Анализ</button>
-    </div>
-    <div id="content">
-      <div id="income" class="tab"></div>
-      <div id="expenses" class="tab" style="display:none"></div>
-      <div id="analytics" class="tab" style="display:none"></div>
-    </div>
+  <h1 id="summary">Всего: €0.00</h1>
+
+  <div class="chart-container">
+    <canvas id="expenseChart"></canvas>
   </div>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <fieldset class="block">
+    <legend>Фильтры</legend>
+    <div class="filters">
+      <div class="row">
+        <label class="small-label">Период:</label>
+        <input type="date" id="filter-from" />
+        <input type="date" id="filter-to" />
+      </div>
+      <div class="row">
+        <input type="text" id="filter-tag" placeholder="#тег" />
+        <select id="filter-category">
+          <option value="Все">Все категории</option>
+          <option>Питание</option>
+          <option>Проезд</option>
+          <option>Жильё</option>
+          <option>Картриджи</option>
+          <option>Краски</option>
+          <option>Химия</option>
+          <option>Оборудование</option>
+        </select>
+      </div>
+      <div class="row">
+        <input type="number" id="filter-row-start" placeholder="Строка от" />
+        <input type="number" id="filter-row-end" placeholder="до строки" />
+      </div>
+      <div class="form-buttons">
+        <button onclick="location.reload()">Сброс</button>
+        <button onclick="applyFilters()">Применить</button>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset class="block">
+    <legend>Журнал</legend>
+    <ul id="expense-list"></ul>
+  </fieldset>
+
+  <fieldset class="block">
+    <legend>Добавить запись</legend>
+    <form id="expense-form" class="expense-form">
+      <div class="row">
+        <select id="category">
+          <option>Питание</option>
+          <option>Проезд</option>
+          <option>Жильё</option>
+          <option>Картриджи</option>
+          <option>Краски</option>
+          <option>Химия</option>
+          <option>Оборудование</option>
+        </select>
+        <input type="text" id="amount" placeholder="Сумма €" required />
+      </div>
+      <div class="row">
+        <input type="text" id="note" placeholder="Комментарий" />
+        <input type="text" id="tag" placeholder="#тег" />
+      </div>
+      <div class="row">
+        <label class="small-label">Дата:</label>
+        <input type="date" id="date" required />
+      </div>
+      <div class="form-buttons">
+        <button type="button" onclick="form.reset(); document.getElementById('edit-id').value = '';">Отмена</button>
+        <button type="submit">Сохранить</button>
+      </div>
+      <input type="hidden" id="edit-id" />
+    </form>
+  </fieldset>
+
   <script src="firebase-config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
